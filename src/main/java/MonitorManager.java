@@ -38,13 +38,6 @@ public class MonitorManager {
      * Only guaranteed to work on single-monitor setups.
      * Returns the resolution as an int[] ( {width, height} )
      */
-    public int[] getEffectiveResolutionSingleMonitor() {
-//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//        int width = (int)screenSize.getWidth();
-//        int height = (int)screenSize.getHeight();
 
-        Rectangle bounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-        return new int[] {bounds.width, bounds.height};
-    }
 
 }

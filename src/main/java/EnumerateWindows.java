@@ -23,6 +23,15 @@ public class EnumerateWindows {
         return instance;
     }
 
+    public int[] getEffectiveResolutionSingleMonitor() {
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        int width = (int)screenSize.getWidth();
+//        int height = (int)screenSize.getHeight();
+
+        Rectangle bounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        return new int[] {bounds.width, bounds.height};
+    }
+
     /*
      * Returns the coordinates of the currently active window as a RECT
      * Note - coordinates of each side can be accessed like so: rect.left, rect.top, etc
