@@ -11,9 +11,9 @@ import java.awt.*;
 public class EnumerateWindows {
 
     private static EnumerateWindows instance = null;
-    private EvictingQueue<String> positionRecord;
+    private String previousPos; //TODO - maintain a previousPos for each window!! or, keep a hashtable of (window name, previous pos)
     private EnumerateWindows() {
-        positionRecord = EvictingQueue.create(5);
+        previousPos = "";
     }
 
     public static EnumerateWindows getInstance() {
@@ -63,11 +63,25 @@ public class EnumerateWindows {
         int[] res = getEffectiveResolutionSingleMonitor();
         int resW = res[0];
         int resH = res[1];
-        int width = resW / 2;
+        int width;
         int height = resH;
 
-        setActiveWindowPos(-8, 0, width+14, height+8);
-        positionRecord.add("Left");
+        // Determine new position based on previous state
+        if (previousPos.equals("VT1")) {
+            width = resW/3;
+            setActiveWindowPos(resW/3, 0, width, height);
+            previousPos = "VT2";
+        } else if (previousPos.equals("VH1")) {
+            width = resW/3;
+            setActiveWindowPos(0, 0, width, height);
+            previousPos = "VT1";
+        } else {
+            width = resW/2;
+            setActiveWindowPos(0, 0, width, height);
+            previousPos = "VH1";
+        }
+
+//        setActiveWindowPos(-8, 0, width+14, height+8);
     }
 
     /*
@@ -77,11 +91,25 @@ public class EnumerateWindows {
         int[] res = getEffectiveResolutionSingleMonitor();
         int resW = res[0];
         int resH = res[1];
-        int width = resW / 2;
+        int width;
         int height = resH;
 
-        setActiveWindowPos(resW/2-8, 0, width+14, height+8);
-        positionRecord.add("Right");
+        // Determine new position based on previous state
+        if (previousPos.equals("VT3")) {
+            width = resW/3;
+            setActiveWindowPos(resW/3, 0, width, height);
+            previousPos = "VT2";
+        } else if (previousPos.equals("VH2")) {
+            width = resW/3;
+            setActiveWindowPos(2*resW/3, 0, width, height);
+            previousPos = "VT3";
+        } else {
+            width = resW/2;
+            setActiveWindowPos(resW/2, 0, width, height);
+            previousPos = "VH2";
+        }
+
+//        setActiveWindowPos(resW/2-8, 0, width+14, height+8);
     }
 
     /*
@@ -92,10 +120,24 @@ public class EnumerateWindows {
         int resW = res[0];
         int resH = res[1];
         int width = resW;
-        int height = resH / 2;
+        int height;
 
-        setActiveWindowPos(0, 0, width, height);
-        positionRecord.add("Top");
+        // Determine new position based on previous state
+        if (previousPos.equals("HT1")) {
+            height = resH/3;
+            setActiveWindowPos(0, resH/3, width, height);
+            previousPos = "HT2";
+        } else if (previousPos.equals("HH1")) {
+            height = resH/3;
+            setActiveWindowPos(0, 0, width, height);
+            previousPos = "HT1";
+        } else {
+            height = resH/2;
+            setActiveWindowPos(0, 0, width, height);
+            previousPos = "HH1";
+        }
+
+//        setActiveWindowPos(0, 0, width, height);
     }
 
     /*
@@ -106,10 +148,24 @@ public class EnumerateWindows {
         int resW = res[0];
         int resH = res[1];
         int width = resW;
-        int height = resH / 2;
+        int height;
 
-        setActiveWindowPos(0, resH/2, width, height);
-        positionRecord.add("Bottom");
+        // Determine new position based on previous state
+        if (previousPos.equals("HT3")) {
+            height = resH/3;
+            setActiveWindowPos(0, resH/3, width, height);
+            previousPos = "HT2";
+        } else if (previousPos.equals("HH2")) {
+            height = resH/3;
+            setActiveWindowPos(0, 2*resH/3, width, height);
+            previousPos = "HT3";
+        } else {
+            height = resH/2;
+            setActiveWindowPos(0, resH/2, width, height);
+            previousPos = "HH2";
+        }
+
+//        setActiveWindowPos(0, resH/2, width, height);
     }
 
     /*
@@ -123,26 +179,26 @@ public class EnumerateWindows {
         int height = resH / 2;
 
         setActiveWindowPos(resW/4, resH/4, width, height);
-        positionRecord.add("Center");
+//        previousPos.add("Center");
     }
 
     public void setActiveWindowMaximize() {
         HWND hwnd = User32.INSTANCE.GetForegroundWindow();
         User32.INSTANCE.ShowWindow(hwnd, WinUser.SW_MAXIMIZE);
-        positionRecord.add("Maximize");
+//        previousPos.add("Maximize");
     }
 
     public void setActiveWindowminimize() {
         HWND hwnd = User32.INSTANCE.GetForegroundWindow();
         User32.INSTANCE.ShowWindow(hwnd, WinUser.SW_MINIMIZE);
-        positionRecord.add("Minimize");
+//        previousPos.add("Minimize");
     }
 
     /*
      * TODO - Moves the active window to the next screen
      */
     public void setActiveWindowNextMonitor() {
-        positionRecord.add("Monitor");
+//        previousPos.add("Monitor");
     }
 
 }
