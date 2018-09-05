@@ -18,6 +18,8 @@ public class GlobalKeyListener implements NativeKeyListener {
         System.out.println("Key Pressed: " + keyStr + " " + keyCode);
         System.out.println("(" + rect.left + "," + rect.top + ") (" + rect.right +
                 "," + rect.bottom + ") size: " + (rect.right-rect.left) + "x" + (rect.bottom-rect.top));
+        String[] windowInfo = windowManager.getActiveWindowObject();
+        System.out.println(windowInfo[0] + "|||" + windowInfo[1] + "|||" + windowInfo[2]);
 
         // Only continue to check keys if alt is being pressed. This prevents much unnecessary conditional
         // logic every time a key is pressed, since the alt key is relatively rarely pressed.
