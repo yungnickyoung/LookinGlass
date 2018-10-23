@@ -1,11 +1,24 @@
 import com.sun.jna.platform.win32.WinDef;
+import org.jnativehook.GlobalScreen;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
+import java.awt.*;
 import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GlobalKeyListener implements NativeKeyListener {
     Hashtable<String, Boolean> keysPressedMap = new Hashtable<>();
+
+    public GlobalKeyListener() {
+        // Set jnativehook logger to warning level
+        Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+        logger.setLevel(Level.WARNING);
+
+    // Don't forget to disable the parent handlers.
+        logger.setUseParentHandlers(false);
+    }
 
     public void nativeKeyPressed(NativeKeyEvent e) {
         Integer keyCode = e.getKeyCode();
@@ -13,13 +26,12 @@ public class GlobalKeyListener implements NativeKeyListener {
         EnumerateWindows windowManager = EnumerateWindows.getInstance();
 
         keysPressedMap.put(keyStr, true);
-        WinDef.RECT rect = windowManager.getActiveWindowCoordinates();
-
         System.out.println("Key Pressed: " + keyStr + " " + keyCode);
-        System.out.println("(" + rect.left + "," + rect.top + ") (" + rect.right +
-                "," + rect.bottom + ") size: " + (rect.right-rect.left) + "x" + (rect.bottom-rect.top));
+
+        System.out.println("Active window: " + windowManager.getActiveWindowRectangle());
+
         String[] windowInfo = windowManager.getActiveWindowObject();
-        System.out.println(windowInfo[0] + "|||" + windowInfo[1] + "|||" + windowInfo[2]);
+        System.out.println(windowInfo[0] + "  PID: " + windowInfo[1] + "  Thread ID:" + windowInfo[2]);
 
         // Only continue to check keys if alt is being pressed. This prevents much unnecessary conditional
         // logic every time a key is pressed, since the alt key is relatively rarely pressed.
