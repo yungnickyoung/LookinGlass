@@ -11,3 +11,7 @@ The following features are planned for Looking Glass:
 * Easy installation for Windows users
 * Remote window management
   * e.g. being able to manage Window A while Window B is in focus
+
+TODO:
+* Disable keyboard from typing while command for resizing is being used
+* Consider disabling (Windows Key + Arrow Key) window movement built into Windows, and using Windows key as functional key instead
