@@ -18,3 +18,4 @@ TODO:
 * Handle all resolutions properly, including odd ones like 1368x768 (~16.008:9), 16:10, etc
 * Explore error when handling windows with transparency (window goes right then locks to left when pressing Shift Alt Right)
   * e.g. cmder (?)
+* Fix comment errors in SystemTrayItem
