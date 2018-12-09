@@ -4,11 +4,14 @@ public class DisplayScreen {
     // Actual monitor coordinates and resolution, e.g. (0, 0, 1920, 1080)
     private Rectangle nativeBounds;
 
-    // effective window space, adds JNA expansions (usually 8px in each direction) and subtracts insets (e.g. taskbar)
+    // Effective window space, adds JNA expansions (usually 8px in each direction) and subtracts insets (e.g. taskbar)
     // e.g. leftmost monitor with 40px tall taskbar would be (-8, -8, 1936, 1056)
     private Rectangle effectiveBounds;
 
-    // Public constructor - user calls with GraphicsConfiguration
+    /**
+     * Public constructor called with a java.awt.GraphicsConfiguration
+     * @param gc GraphicsConfiguration for target screen
+     */
     public DisplayScreen(GraphicsConfiguration gc) {
         this(gc.getBounds(), Toolkit.getDefaultToolkit().getScreenInsets(gc), gc.getDevice());
     }
@@ -30,6 +33,11 @@ public class DisplayScreen {
         System.out.println(", Effective: " + effectiveBounds);
     }
 
+    /**
+     * Returns the amount of overlapping area of a window on this DisplayScreen.
+     * @param windowRectangle A window represented as a java.awt.Rectangle
+     * @return The overlapping area
+     */
     public float areaOverlap(Rectangle windowRectangle) {
         // Calculate bounds of window
         int windowLeft = windowRectangle.x;
@@ -56,10 +64,19 @@ public class DisplayScreen {
         return 0; // empty intersection
     }
 
+    /**
+     * @return This display's native bounds as a java.awt.Rectangle
+     */
     public Rectangle getNativeBounds() {
         return nativeBounds;
     }
 
+    /** 
+     * Returns the display's effective bounds. The effective bounds is typically equivalent to the native bounds, 
+     * plus a buffer added by JNA on each side of the window (usually 8px), minus any insets that may change the
+     * effective screen size (e.g. taskbar) 
+     * @return This display's effective bounds as a java.awt.Rectangle. 
+     */
     public Rectangle getEffectiveBounds() {
         return effectiveBounds;
     }
