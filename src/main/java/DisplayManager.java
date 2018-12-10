@@ -2,36 +2,28 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Singleton class for managing all display devices on a system.
- * Use <pre> {@code DisplayManager.getInstance()} </pre> for instantiation.
+ * Class for managing all display devices on a system.
  */
 public class DisplayManager {
-    private static DisplayManager instance = null; // static singleton instance
-    private ArrayList<DisplayScreen> displayDevices; // list of display devices being managed
-
-    // Private constructor used by getInstance()
-    private DisplayManager() {
-        displayDevices = getSystemDisplays();
-    }
+    // private static DisplayManager instance = null; // static singleton instance
+    private static ArrayList<DisplayScreen> displayDevices; // list of display devices being managed
 
     /**
-     * @return Singleton instance of DisplayManager
+     * Private constructor to prevent instantiation
      */
-    public static DisplayManager getInstance() {
-        if (instance == null)
-            instance = new DisplayManager();
-
-        return instance;
-    }
+    private DisplayManager() {}
 
     /**
      * Finds the primary display device for a window based on area of overlap.
      * Whichever display device contains the greatest area of overlap with the window
      * is designated as the primary display.
      * @param window The window in question, as a java.awt.Rectangle
-     * @return The primary display for the given window, as a DisplayScreen
+     * @return The primary display for the given window, or {@code null} if no raster type
+     * display device overlaps with this window
      */
-    public DisplayScreen findPrimaryDisplayForWindow(Rectangle window) {
+    public static DisplayScreen findPrimaryDisplayForWindow(Rectangle window) {
+        updateSystemDisplayDevices();
+
         float maxOverlapArea = 0;
         DisplayScreen primaryDisplay = null;
 
@@ -47,20 +39,31 @@ public class DisplayManager {
     }
 
     /**
-     * Method for updating the DisplayManager's list of the system's display devices. Useful if any 
-     * devices have been added or removed.
+     * Finds the primary display device for a window based on area of overlap.
+     * Whichever display device contains the greatest area of overlap with the window
+     * is designated as the primary display.
+     * @param window The window in question, as an LGWindow
+     * @return The primary display for the given window, or {@code null} if no raster type
+     * display device overlaps with this window
      */
-    public void updateSystemDisplayDevices() {
-        displayDevices = getSystemDisplays();
+    public static DisplayScreen findPrimaryDisplayForWindow(LGWindow window) {
+        return findPrimaryDisplayForWindow(window.getRectangle());
+    }
+
+    /**
+     * Method for updating the DisplayManager's list of the system's display devices.
+     */
+    private static void updateSystemDisplayDevices() {
+        displayDevices = findSystemDisplays();
     }
 
     /**
      * Private method used to create a list of the system's display devices.
-     * These devices are determined using java.awt.GraphicsEnvironment.
+     * These devices are determined using {@code java.awt.GraphicsEnvironment}.
      * Only devices which are a {@code java.awt.GraphicsDevice.TYPE_RASTER_SCREEN} are used.
-     * @return List of the system's DisplayScreen's as an ArrayList.
+     * @return ArrayList of the system's DisplayScreen's
      */
-    private ArrayList<DisplayScreen> getSystemDisplays () {
+    private static ArrayList<DisplayScreen> findSystemDisplays () {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
 
