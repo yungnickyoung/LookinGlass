@@ -17,8 +17,8 @@ public class LGWindow {
     private Integer thread;
     private String title;
     private Rectangle rectangle;
-    private HWND hwnd;
-    private KickOutQueue<LGState> stateHistory;
+    private HWND hwnd; // This window's handle
+    private KickOutQueue<LGState> stateHistory; // Store last five states of window
 
     /**
      * Creates a new LGWindow object for a given window handle
@@ -37,10 +37,14 @@ public class LGWindow {
         User32.INSTANCE.GetWindowText(hwnd, buffer, 1024);
         title = Native.toString(buffer);
 
-        stateHistory = new KickOutQueue<>(5); // Record last five states for window
+        stateHistory = new KickOutQueue<>(5); // Records last five states for window
         rectangle = calculateWindowRectangle(hwnd);
     }
 
+    /**
+     * Returns this window's information as a string in the following form:
+     * <pre>{@code "<title>", PID: <PID>, TID: <threadID>, POS: <position as java.awt.Rectangle>}</pre>
+     */
     public String toString() {
         return "\"" + title + "\", PID: " + PID + ", TID: " + thread + ", POS:" + rectangle;
     }
@@ -82,9 +86,9 @@ public class LGWindow {
      * @param rect The {@code java.awt.Rectangle} containing the values for the window's new position and size
      */
     public void moveWindow(Rectangle rect) {
-        rectangle = rect;
+        rectangle = rect; // Update the window's stored position/size information
         User32.INSTANCE.ShowWindow(hwnd, WinUser.SW_SHOWNORMAL); // Get window out of minimized or maximized state
-        User32.INSTANCE.SetWindowPos(hwnd, null, rect.x, rect.y, rect.width, rect.height, WinUser.SWP_NOZORDER);
+        User32.INSTANCE.SetWindowPos(hwnd, null, rect.x, rect.y, rect.width, rect.height, WinUser.SWP_NOZORDER); // actuall moves window
     }
 
     /**

@@ -23,7 +23,7 @@ public class GlobalKeyListener implements NativeKeyListener {
     public void nativeKeyPressed(NativeKeyEvent e) {
         Integer keyCode = e.getKeyCode();
         String keyStr = NativeKeyEvent.getKeyText(keyCode);
-        EnumerateWindows windowManager = EnumerateWindows.getInstance();
+        LGWindowManager windowManager = LGWindowManager.getInstance();
 
         keysPressedMap.put(keyStr, true);
         System.out.println("Key Pressed: " + keyStr + " " + keyCode);

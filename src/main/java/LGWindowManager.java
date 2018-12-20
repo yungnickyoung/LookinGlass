@@ -19,18 +19,18 @@ import java.util.Hashtable;
  * Singleton class for repositioning the currently active window. This class was
  * designed to have its methods called upon certain keypress combinations,
  * e.g. {@code Alt + Shift + Left --> setActiveWindowLeft()}.
- * <br><br>
- * Use {@code EnumerateWindows.getInstance()} to retrieve the single instance.
+ * <br /><br />
+ * Use {@code LGWindowManager.getInstance()} to retrieve the single instance.
  */
-public class EnumerateWindows {
+public class LGWindowManager {
     // Singleton instance
-    private static EnumerateWindows instance = null;
+    private static LGWindowManager instance = null;
 
     // Maps Process IDs (PIDs) to LGWindow objects
     private Hashtable<Integer, LGWindow> windowTable;
 
     // Private constructor used by getInstance()
-    private EnumerateWindows() {
+    private LGWindowManager() {
         windowTable = new Hashtable<>();
     }
 
@@ -38,22 +38,19 @@ public class EnumerateWindows {
      * @return New instance if not already instantiated; previously created
      * instance otherwise
      */
-    public static EnumerateWindows getInstance() {
+    public static LGWindowManager getInstance() {
         if (instance == null)
-            instance = new EnumerateWindows();
+            instance = new LGWindowManager();
 
         return instance;
     }
 
     /**
-     * Sets the designated window's position and dimensions to those provided.
-     * @param hwnd Handle to the window
-     * @param left The new x-coordinate of the left side of the window
-     * @param top The new y-coordinate of the top of the window
-     * @param width The new width of the window
-     * @param height The new height of the window
+     * Get the Process ID of a window from it's handle. This is useful for retrieving the PID
+     * of a window without creating a corresponding LGWindow object.
+     * @param hwnd Handle (com.sun.jna.platform.win32.WinDef.HWND) to a window
+     * @return The window's Process ID (PID)
      */
-
     private Integer getWindowPID(HWND hwnd) {
         IntByReference rPID = new IntByReference();
         User32.INSTANCE.GetWindowThreadProcessId(hwnd, rPID);
