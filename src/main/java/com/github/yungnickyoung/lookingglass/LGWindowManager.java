@@ -59,6 +59,37 @@ public class LGWindowManager {
         return rPID.getValue();
     }
 
+    public void repositionActiveWindow(String command) {
+        // Get active window's PID
+        HWND hwnd = User32.INSTANCE.GetForegroundWindow();
+        Integer PID = getWindowPID(hwnd);
+
+        // Get active window's LGWindow object, or create it if it does not yet exist
+        LGWindow activeWindow = windowTable.get(PID);
+        if (activeWindow == null) {
+            activeWindow = new LGWindow(hwnd);
+            windowTable.put(PID, activeWindow);
+        }
+
+        activeWindow.updateWindowPosition();
+
+///DEBUG
+System.out.println(activeWindow);
+
+        DisplayScreen primaryDisplay = DisplayManager.findPrimaryDisplayForWindow(activeWindow);
+        if (primaryDisplay == null) {
+            System.err.println("ERROR: Unable to locate primary display for window!");
+            return; 
+        }
+
+        Rectangle displayBounds = primaryDisplay.getEffectiveBounds();
+
+        if (command.equals("left"))
+            LGWindowMover.moveWindowLeft(activeWindow, displayBounds);
+        else if (command.equals("right"))
+            LGWindowMover.moveWindowRight(activeWindow, displayBounds);
+    }
+
     /**
      * Moves the currently active window to the next left position on its primary display. 
      * Does nothing if unable to locate the primary display for the active window 
@@ -88,35 +119,12 @@ System.out.println(activeWindow);
         }
 
         Rectangle displayBounds = primaryDisplay.getEffectiveBounds();
-        Rectangle newWindowBounds;
 
-        LGState state = activeWindow.getMostRecentState();
-
-        if (state == LGState.VERTICAL_THIRD_LEFT) {
-            newWindowBounds = new Rectangle(
-                (displayBounds.width / 3) + displayBounds.x - 7,
-                displayBounds.y, 
-                (displayBounds.width / 3) + 14,
-                displayBounds.height + 7);
-            activeWindow.setNewState(LGState.VERTICAL_THIRD_MIDDLE);
-        } else if (state == LGState.VERTICAL_HALF_LEFT) {
-            newWindowBounds = new Rectangle(
-                displayBounds.x - 7,
-                displayBounds.y, 
-                (displayBounds.width / 3) + 14, 
-                displayBounds.height + 7);
-            activeWindow.setNewState(LGState.VERTICAL_THIRD_LEFT);
-        } else {
-            newWindowBounds = new Rectangle(
-                displayBounds.x - 7, 
-                displayBounds.y, 
-                (displayBounds.width / 2) + 14, 
-                displayBounds.height + 7);
-            activeWindow.setNewState(LGState.VERTICAL_HALF_LEFT);
-        }
-
-        activeWindow.moveWindow(newWindowBounds);
+        LGWindowMover.moveWindow(activeWindow, "left", displayBounds);
     }
+
+
+
 
     public void setActiveWindowRight() {
         // Get active window's PID
@@ -142,34 +150,8 @@ System.out.println(activeWindow);
         }
 
         Rectangle displayBounds = primaryDisplay.getEffectiveBounds();
-        Rectangle newWindowBounds;
 
-        LGState state = activeWindow.getMostRecentState();
-
-        if (state == LGState.VERTICAL_THIRD_RIGHT) {
-            newWindowBounds = new Rectangle(
-                (displayBounds.width / 3) + displayBounds.x - 7, 
-                displayBounds.y, 
-                (displayBounds.width / 3) + 14, 
-                displayBounds.height + 7);
-            activeWindow.setNewState(LGState.VERTICAL_THIRD_MIDDLE);
-        } else if (state == LGState.VERTICAL_HALF_RIGHT) {
-            newWindowBounds = new Rectangle(
-                (2 * displayBounds.width / 3) + displayBounds.x - 7, 
-                displayBounds.y, 
-                (displayBounds.width / 3) + 15, 
-                displayBounds.height + 7);
-            activeWindow.setNewState(LGState.VERTICAL_THIRD_RIGHT);
-        } else {
-            newWindowBounds = new Rectangle(
-                (displayBounds.width / 2) + displayBounds.x - 7, 
-                displayBounds.y, 
-                (displayBounds.width / 2) + 14, 
-                displayBounds.height + 7);
-            activeWindow.setNewState(LGState.VERTICAL_HALF_RIGHT);
-        }
-
-        activeWindow.moveWindow(newWindowBounds);
+        LGWindowMover.moveWindow(activeWindow, "right", displayBounds);
     }
 
     /*
