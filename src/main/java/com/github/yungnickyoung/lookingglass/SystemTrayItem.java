@@ -1,6 +1,5 @@
 package com.github.yungnickyoung.lookingglass;
 
-import jdk.nashorn.internal.objects.Global;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 

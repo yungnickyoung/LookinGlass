@@ -1,21 +1,12 @@
 package com.github.yungnickyoung.lookingglass;
 
-import com.sun.jna.Native;
-import com.sun.jna.platform.unix.X11;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
-import com.sun.jna.platform.win32.WinDef.RECT;
 import com.sun.jna.platform.win32.WinUser;
 import com.sun.jna.ptr.IntByReference;
-import org.w3c.dom.css.Rect;
 
 import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Hashtable;
-
-// TODO - Be able to control window while inactive. E.g. control window 1 while 4 is active
-// TODO - hotkey to set/clear number of each window. If number is already used, either notify user or overwrite, or both
 
 /**
  * Singleton class for repositioning the currently active window. This class was
@@ -59,6 +50,14 @@ public class LGWindowManager {
         return rPID.getValue();
     }
 
+    /**
+     * Moves the currently active window to a new position on its primary display,
+     * as indicated by the provided command string. Does nothing if unable to locate the primary display 
+     * for the active window (this shouldn't happen).
+     * @param command Case-insensitive string indicating the position to set the window to. Acceptable commands are the following:
+     * <br /><br />
+     * {@code"LEFT"}, {@code"RIGHT"}, {@code"UP"}, {@code"DOWN"}, {@code"CENTER"}
+     */
     public void repositionActiveWindow(String command) {
         // Get active window's PID
         HWND hwnd = User32.INSTANCE.GetForegroundWindow();
@@ -84,74 +83,11 @@ System.out.println(activeWindow);
 
         Rectangle displayBounds = primaryDisplay.getEffectiveBounds();
 
-        if (command.equals("left"))
+        command = command.toUpperCase();
+        if (command.equals("LEFT"))
             LGWindowMover.moveWindowLeft(activeWindow, displayBounds);
-        else if (command.equals("right"))
+        else if (command.equals("RIGHT"))
             LGWindowMover.moveWindowRight(activeWindow, displayBounds);
-    }
-
-    /**
-     * Moves the currently active window to the next left position on its primary display. 
-     * Does nothing if unable to locate the primary display for the active window 
-     * (this shouldn't happen).
-     */
-    public void setActiveWindowLeft() {
-        // Get active window's PID
-        HWND hwnd = User32.INSTANCE.GetForegroundWindow();
-        Integer PID = getWindowPID(hwnd);
-
-        // Get active window's LGWindow object, or create it if it does not yet exist
-        LGWindow activeWindow = windowTable.get(PID);
-        if (activeWindow == null) {
-            activeWindow = new LGWindow(hwnd);
-            windowTable.put(PID, activeWindow);
-        }
-
-        activeWindow.updateWindowPosition();
-
-///DEBUG
-System.out.println(activeWindow);
-
-        DisplayScreen primaryDisplay = DisplayManager.findPrimaryDisplayForWindow(activeWindow);
-        if (primaryDisplay == null) {
-            System.err.println("ERROR: Unable to locate primary display for window!");
-            return; 
-        }
-
-        Rectangle displayBounds = primaryDisplay.getEffectiveBounds();
-
-        LGWindowMover.moveWindow(activeWindow, "left", displayBounds);
-    }
-
-
-
-
-    public void setActiveWindowRight() {
-        // Get active window's PID
-        HWND hwnd = User32.INSTANCE.GetForegroundWindow();
-        Integer PID = getWindowPID(hwnd);
-
-        // Get active window's LGWindow object, or create it if it does not yet exist
-        LGWindow activeWindow = windowTable.get(PID);
-        if (activeWindow == null) {
-            activeWindow = new LGWindow(hwnd);
-            windowTable.put(PID, activeWindow);
-        }
-        
-        activeWindow.updateWindowPosition();
-
-///DEBUG
-System.out.println(activeWindow);
-
-        DisplayScreen primaryDisplay = DisplayManager.findPrimaryDisplayForWindow(activeWindow);
-        if (primaryDisplay == null) {
-            System.err.println("ERROR: Unable to locate primary display for window!");
-            return; 
-        }
-
-        Rectangle displayBounds = primaryDisplay.getEffectiveBounds();
-
-        LGWindowMover.moveWindow(activeWindow, "right", displayBounds);
     }
 
     /*

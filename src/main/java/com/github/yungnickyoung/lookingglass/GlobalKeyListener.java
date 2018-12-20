@@ -1,11 +1,9 @@
 package com.github.yungnickyoung.lookingglass;
 
-import com.sun.jna.platform.win32.WinDef;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
-import java.awt.*;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,19 +41,19 @@ public class GlobalKeyListener implements NativeKeyListener {
         // Determine if any of the hot key combinations have been completed (and execute the corresponding action if so)
         if (keysPressedMap.getOrDefault("Left", false)) {
             System.out.println("SHIFTED LEFT");
-            windowManager.setActiveWindowLeft();
+            windowManager.repositionActiveWindow("left");
         } else if (keysPressedMap.getOrDefault("Up", false)) {
             System.out.println("SHIFTED UP");
-            windowManager.setActiveWindowTop();
+            windowManager.repositionActiveWindow("up");
         } else if (keysPressedMap.getOrDefault("Right", false)) {
             System.out.println("SHIFTED RIGHT");
-            windowManager.setActiveWindowRight();
+            windowManager.repositionActiveWindow("right");
         } else if (keysPressedMap.getOrDefault("Down", false)) {
             System.out.println("SHIFTED DOWN");
-            windowManager.setActiveWindowBottom();
+            windowManager.repositionActiveWindow("down");
         } else if (keysPressedMap.getOrDefault("C", false)) {
             System.out.println("RESET TO CENTER");
-            windowManager.setActiveWindowCenter();
+            windowManager.repositionActiveWindow("center");
         } else if (keysPressedMap.getOrDefault("F", false)) {
             System.out.println("FULL SCREEN");
             windowManager.setActiveWindowMaximize();
