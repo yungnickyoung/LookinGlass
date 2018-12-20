@@ -1,3 +1,5 @@
+package com.github.yungnickyoung.lookingglass;
+
 /**
  * The relative position of an LGWindow object on a display device.
  */

@@ -1,3 +1,5 @@
+package com.github.yungnickyoung.lookingglass;
+
 import java.awt.Rectangle;
 
 import com.sun.jna.Native;

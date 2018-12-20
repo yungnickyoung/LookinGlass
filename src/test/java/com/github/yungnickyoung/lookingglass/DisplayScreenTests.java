@@ -1,3 +1,5 @@
+package com.github.yungnickyoung.lookingglass;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.*;

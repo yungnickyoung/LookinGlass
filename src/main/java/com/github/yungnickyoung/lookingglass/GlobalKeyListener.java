@@ -1,3 +1,5 @@
+package com.github.yungnickyoung.lookingglass;
+
 import com.sun.jna.platform.win32.WinDef;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.keyboard.NativeKeyEvent;

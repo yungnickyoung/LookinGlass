@@ -1,3 +1,5 @@
+package com.github.yungnickyoung.lookingglass;
+
 import com.sun.jna.Native;
 import com.sun.jna.platform.unix.X11;
 import com.sun.jna.platform.win32.User32;
