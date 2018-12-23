@@ -70,106 +70,33 @@ public class LGWindowManager {
             windowTable.put(PID, activeWindow);
         }
 
+        // Update window's data in case the window has been rearranged via methods outside of LG (e.g. mouse)
         activeWindow.updateWindowPosition();
 
-///DEBUG
-System.out.println(activeWindow);
-
+        // Find the window's primary display (based on the window's and display's common area of overlap)
         DisplayScreen primaryDisplay = DisplayManager.findPrimaryDisplayForWindow(activeWindow);
         if (primaryDisplay == null) {
             System.err.println("ERROR: Unable to locate primary display for window!");
             return; 
         }
 
-        Rectangle displayBounds = primaryDisplay.getEffectiveBounds();
+        Rectangle effectiveDisplayBounds = primaryDisplay.getEffectiveBounds();
 
+        // Move window according to command provided
         command = command.toUpperCase();
         if (command.equals("LEFT"))
-            LGWindowMover.moveWindowLeft(activeWindow, displayBounds);
+            LGWindowMover.moveWindowLeft(activeWindow, effectiveDisplayBounds);
         else if (command.equals("RIGHT"))
-            LGWindowMover.moveWindowRight(activeWindow, displayBounds);
-    }
+            LGWindowMover.moveWindowRight(activeWindow, effectiveDisplayBounds);
+        else if (command.equals("UP"))
+            LGWindowMover.moveWindowUp(activeWindow, effectiveDisplayBounds);
+        else if (command.equals("DOWN"))
+            LGWindowMover.moveWindowDown(activeWindow, effectiveDisplayBounds);
+        else if (command.equals("CENTER"))
+            LGWindowMover.moveWindowCenter(activeWindow, effectiveDisplayBounds);
 
-    /*
-     * Moves the active window to the top half of the screen
-     */
-    public void setActiveWindowTop() {
-////        int[] res = getEffectiveResolutionSingleMonitor();
-//        int[] res = new int[]{3, 4};
-//
-//        int resW = res[0];
-//        int resH = res[1];
-//        int width = resW;
-//        int height;
-//
-//        String PID = this.getActiveWindowObject()[1];
-//        String previousPos = stateMap.getOrDefault(PID, "");
-//
-//        // Determine new position based on previous state
-//        if (previousPos.equals("HT1")) {
-//            height = resH / 3;
-//            setActiveWindowPos(0, resH / 3, width, height);
-//            stateMap.put(PID, "HT2");
-//        } else if (previousPos.equals("HH1")) {
-//            height = resH / 3;
-//            setActiveWindowPos(0, 0, width, height);
-//            stateMap.put(PID, "HT1");
-//        } else {
-//            height = resH / 2;
-//            setActiveWindowPos(0, 0, width, height);
-//            stateMap.put(PID, "HH1");
-//        }
-//
-////        setActiveWindowPos(0, 0, width, height);
-    }
-
-    /*
-     * Moves the active window to the bottom half of the screen
-     */
-    public void setActiveWindowBottom() {
-////        int[] res = getEffectiveResolutionSingleMonitor();
-//        int[] res = new int[]{3, 4};
-//
-//        int resW = res[0];
-//        int resH = res[1];
-//        int width = resW;
-//        int height;
-//
-//        String PID = this.getActiveWindowObject()[1];
-//        String previousPos = stateMap.getOrDefault(PID, "");
-//
-//        // Determine new position based on previous state
-//        if (previousPos.equals("HT3")) {
-//            height = resH / 3;
-//            setActiveWindowPos(0, resH / 3, width, height);
-//            stateMap.put(PID, "HT2");
-//        } else if (previousPos.equals("HH2")) {
-//            height = resH / 3;
-//            setActiveWindowPos(0, 2 * resH / 3, width, height);
-//            stateMap.put(PID, "HT3");
-//        } else {
-//            height = resH / 2;
-//            setActiveWindowPos(0, resH / 2, width, height);
-//            stateMap.put(PID, "HH2");
-//        }
-//
-////        setActiveWindowPos(0, resH/2, width, height);
-    }
-
-    /*
-     * Moves the active window to the center of the screen
-     */
-    public void setActiveWindowCenter() {
-////        int[] res = getEffectiveResolutionSingleMonitor();
-//        int[] res = new int[]{3, 4};
-//
-//        int resW = res[0];
-//        int resH = res[1];
-//        int width = resW / 2;
-//        int height = resH / 2;
-//
-//        setActiveWindowPos(resW / 4, resH / 4, width, height);
-////        previousPos.add("Center");
+///DEBUG
+System.out.println(activeWindow);
     }
 
     public void setActiveWindowMaximize() {
@@ -178,7 +105,7 @@ System.out.println(activeWindow);
 //        previousPos.add("Maximize");
     }
 
-    public void setActiveWindowminimize() {
+    public void setActiveWindowMinimize() {
         HWND hwnd = User32.INSTANCE.GetForegroundWindow();
         User32.INSTANCE.ShowWindow(hwnd, WinUser.SW_MINIMIZE);
 //        previousPos.add("Minimize");

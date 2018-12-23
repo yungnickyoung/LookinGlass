@@ -90,7 +90,7 @@ public class LGWindow {
     public void moveWindow(Rectangle rect) {
         rectangle = rect; // Update the window's stored position/size information
         User32.INSTANCE.ShowWindow(hwnd, WinUser.SW_SHOWNORMAL); // Get window out of minimized or maximized state
-        User32.INSTANCE.SetWindowPos(hwnd, null, rect.x, rect.y, rect.width, rect.height, WinUser.SWP_NOZORDER); // actuall moves window
+        User32.INSTANCE.SetWindowPos(hwnd, null, rect.x, rect.y, rect.width, rect.height, WinUser.SWP_NOZORDER); // actually moves window
     }
 
     /**
