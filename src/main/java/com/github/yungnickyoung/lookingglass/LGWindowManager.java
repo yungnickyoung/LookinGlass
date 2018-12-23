@@ -94,21 +94,13 @@ public class LGWindowManager {
             LGWindowMover.moveWindowDown(activeWindow, effectiveDisplayBounds);
         else if (command.equals("CENTER"))
             LGWindowMover.moveWindowCenter(activeWindow, effectiveDisplayBounds);
+        else if (command.equals("MAXIMIZE"))
+            LGWindowMover.maximizeWindow(activeWindow);
+        else if (command.equals("MINIMIZE"))
+            LGWindowMover.minimizeWindow(activeWindow);
 
 ///DEBUG
 System.out.println(activeWindow);
-    }
-
-    public void setActiveWindowMaximize() {
-        HWND hwnd = User32.INSTANCE.GetForegroundWindow();
-        User32.INSTANCE.ShowWindow(hwnd, WinUser.SW_MAXIMIZE);
-//        previousPos.add("Maximize");
-    }
-
-    public void setActiveWindowMinimize() {
-        HWND hwnd = User32.INSTANCE.GetForegroundWindow();
-        User32.INSTANCE.ShowWindow(hwnd, WinUser.SW_MINIMIZE);
-//        previousPos.add("Minimize");
     }
 
     /*

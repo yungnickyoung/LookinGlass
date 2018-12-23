@@ -106,6 +106,7 @@ public class LGWindow {
     public Integer getThread() { return thread; }
     public String getTitle() { return title; }
     public Rectangle getRectangle() { return rectangle; }
+    public HWND getHWND() { return hwnd; }
     //---------------------------------------------------------//
 
     private Rectangle calculateWindowRectangle(HWND hwnd) {

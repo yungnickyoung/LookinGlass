@@ -55,11 +55,11 @@ public class GlobalKeyListener implements NativeKeyListener {
             System.out.println("RESET TO CENTER");
             windowManager.repositionActiveWindow("center");
         } else if (keysPressedMap.getOrDefault("F", false)) {
-            System.out.println("FULL SCREEN");
-            windowManager.setActiveWindowMaximize();
+            System.out.println("MAXIMIZE");
+            windowManager.repositionActiveWindow("maximize");
         } else if (keysPressedMap.getOrDefault("M", false)) {
-            System.out.println("NEXT MONITOR");
-            windowManager.setActiveWindowNextMonitor();
+            System.out.println("MINIMIZE");
+            windowManager.repositionActiveWindow("minimize");
         }
     }
 

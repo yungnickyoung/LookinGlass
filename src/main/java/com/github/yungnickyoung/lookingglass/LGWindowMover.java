@@ -2,6 +2,10 @@ package com.github.yungnickyoung.lookingglass;
 
 import java.awt.Rectangle;
 
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinUser;
+import com.sun.jna.platform.win32.WinDef.HWND;
+
 /**
  * Static class for moving windows on a system. This class is used by the
  * LGWindowManager.
@@ -192,6 +196,26 @@ final class LGWindowMover {
 
         window.setNewState(LGState.CENTER);
         window.moveWindow(newWindowBounds);
+    }
+
+    /**
+     * Maximizes a window to its last active display.
+     * @param window LGWindow object of the window in question
+     */
+    static void maximizeWindow(LGWindow window) {
+        HWND hwnd = window.getHWND();
+        User32.INSTANCE.ShowWindow(hwnd, WinUser.SW_MAXIMIZE);
+        window.setNewState(LGState.MAXIMIZE);
+    }
+
+    /**
+     * Minimizes a window.
+     * @param window LGWindow object of the window in question
+     */
+    static void minimizeWindow(LGWindow window) {
+        HWND hwnd = window.getHWND();
+        User32.INSTANCE.ShowWindow(hwnd, WinUser.SW_MINIMIZE);
+        window.setNewState(LGState.MINIMIZE);
     }
 
 }
