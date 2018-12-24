@@ -11,7 +11,7 @@ import java.util.Hashtable;
 /**
  * Singleton class for repositioning the currently active window. This class was
  * designed to have its methods called upon certain keypress combinations,
- * e.g. {@code Alt + Shift + Left --> setActiveWindowLeft()}.
+ * e.g. {@code Alt + Shift + Left --> repositionActiveWindow("LEFT")}.
  * <br /><br />
  * Use {@code LGWindowManager.getInstance()} to retrieve the single instance.
  */
@@ -56,7 +56,7 @@ public class LGWindowManager {
      * for the active window (this shouldn't happen).
      * @param command Case-insensitive string indicating the position to set the window to. Acceptable commands are the following:
      * <br /><br />
-     * {@code"LEFT"}, {@code"RIGHT"}, {@code"UP"}, {@code"DOWN"}, {@code"CENTER"}
+     * {@code"LEFT"}, {@code"RIGHT"}, {@code"UP"}, {@code"DOWN"}, {@code"CENTER"}, {@code"MAXIMIZE"}, {@code"MINIMIZE"}
      */
     public void repositionActiveWindow(String command) {
         // Get active window's PID
@@ -98,6 +98,10 @@ public class LGWindowManager {
             LGWindowMover.maximizeWindow(activeWindow);
         else if (command.equals("MINIMIZE"))
             LGWindowMover.minimizeWindow(activeWindow);
+        else {
+            System.err.println("ERROR: INVALID COMMAND \'" + command + "\'");
+            return;
+        }
 
 ///DEBUG
 System.out.println(activeWindow);
