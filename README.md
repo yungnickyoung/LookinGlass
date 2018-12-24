@@ -13,10 +13,15 @@ The following features are planned for Looking Glass:
   * e.g. being able to manage Window A while Window B is in focus
 * Save window layouts and re-use them later (with option to open any programs not already open in saved layout)
 
-TODO:
+Developer's TODO:
 * Disable keyboard from typing while command for resizing is being used
-* Consider disabling (Windows Key + Arrow Key) window movement built into Windows, and using Windows key as functional key instead
+* ~~Consider disabling (Windows Key + Arrow Key) window movement built into Windows, and using Windows key as functional key instead~~
 * Handle all resolutions properly, including odd ones like 1368x768 (~16.008:9), 16:10, etc
 * Explore error when handling windows with transparency (window goes right then locks to left when pressing Shift Alt Right)
   * e.g. cmder (?)
-* Fix comment errors in SystemTrayItem
+* ~~Fix comment errors in SystemTrayItem~~
+* Fix bug where white window opens when user attempts hotkey when software is first run, before any window is clicked on.
+* Switch from AWT to more contemporary design (maybe Swing?)
+* Adjust math for current operations for different resolutions
+* Add support for quarter, sixth, and ninth window arrangements.
+* Change patterns of window arrangement (e.g. alt+shift+left should yield left half -> left third -> two thirds, etc.
