@@ -31,5 +31,7 @@ enum LGState{
     NINTH_BOTTOM_RIGHT,
     CENTER,
     MAXIMIZE,
-    MINIMIZE
+    MINIMIZE,
+    REPOSITIONED /* Use when a window has been repositioned by means
+                    outside of Looking Glass, e.g. via mouse */
 }

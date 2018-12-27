@@ -90,6 +90,9 @@ public class KickOutQueue<T> {
         }
     }
 
+    /**
+     * Removes all elements from this queue. The queue will be empty after this call returns.
+     */
     public void clear() {
         queue.clear();
     }

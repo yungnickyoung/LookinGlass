@@ -96,9 +96,14 @@ public class LGWindow {
     /**
      * Updates the window's stored position in case the user has moved it without using the built-in
      * mechanisms (e.g. by dragging it with the mouse).
+     * <br /><br />
+     * If the window's position is different from what was last stored, the window's most recent
+     * state will be changed to the REPOSITIONED state to reflect this.
      */
     public void updateWindowPosition() {
-        rectangle = calculateWindowRectangle(hwnd);
+        Rectangle r = calculateWindowRectangle(hwnd);
+        if (!r.equals(rectangle)) this.setNewState(LGState.REPOSITIONED);
+        rectangle = r;
     }
     
     //------------------------- GETTERS -----------------------//
