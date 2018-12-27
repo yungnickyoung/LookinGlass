@@ -90,6 +90,10 @@ public class KickOutQueue<T> {
         }
     }
 
+    public void clear() {
+        queue.clear();
+    }
+
     /**
      * @return number of elements in the queue
      */
