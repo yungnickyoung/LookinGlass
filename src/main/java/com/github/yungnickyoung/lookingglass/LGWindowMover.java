@@ -18,7 +18,7 @@ final class LGWindowMover {
      * depends on its {@code LGWindow} object's state history.
      * @param window LGWindow object of the window in question
      * @param effectiveDisplayBounds The effective bounds (as a {@code java.awt.Rectangle} of the display device
-     * the window should be moved to. This is typically the primary display.
+     * on which the window should be positioned. This is typically the primary display.
      * <br /><br />
      * The primary display can be found by using 
      * <pre>{@codeDisplayScreen DisplayManager.findPrimaryDisplayForWindow(LGWindow window); }</pre>
@@ -29,24 +29,35 @@ final class LGWindowMover {
         LGState mostRecentState = window.getMostRecentState();
         Rectangle newWindowBounds;
 
-        if (mostRecentState == LGState.VERTICAL_THIRD_LEFT) {
+        if (mostRecentState == LGState.VERTICAL_THIRD_LEFT || 
+            mostRecentState == LGState.VERTICAL_TWO_THIRDS_RIGHT ||
+            mostRecentState == LGState.VERTICAL_THIRD_RIGHT) 
+        {
             window.setNewState(LGState.VERTICAL_THIRD_MIDDLE);
             newWindowBounds = new Rectangle (
                 (effectiveDisplayBounds.width / 3) + effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
-                (effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7
-            );
-        } else if (mostRecentState == LGState.VERTICAL_HALF_LEFT) {
+                (effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
+        } 
+        else if (mostRecentState == LGState.VERTICAL_THIRD_MIDDLE)
+        {
+            window.setNewState(LGState.VERTICAL_TWO_THIRDS_LEFT);
+            newWindowBounds = new Rectangle (
+                effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
+                (2 * effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
+        }
+        else if (mostRecentState == LGState.VERTICAL_HALF_LEFT) 
+        {
             window.setNewState(LGState.VERTICAL_THIRD_LEFT);
             newWindowBounds = new Rectangle (
                 effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
-                (effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7
-            );
-        } else {
+                (effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
+        } 
+        else 
+        {
             window.setNewState(LGState.VERTICAL_HALF_LEFT);
             newWindowBounds = new Rectangle (
                 effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
-                (effectiveDisplayBounds.width / 2) + 14, effectiveDisplayBounds.height + 7
-            );
+                (effectiveDisplayBounds.width / 2) + 14, effectiveDisplayBounds.height + 7);
         }
 
         window.moveWindow(newWindowBounds);
@@ -58,7 +69,7 @@ final class LGWindowMover {
      * depends on its {@code LGWindow} object's state history.
      * @param window LGWindow object of the window in question
      * @param effectiveDisplayBounds The effective bounds (as a {@code java.awt.Rectangle} of the display device
-     * the window should be moved to. This is typically the primary display.
+     * on which the window should be positioned. This is typically the primary display.
      * <br /><br />
      * The primary display can be found by using 
      * <pre>{@codeDisplayScreen DisplayManager.findPrimaryDisplayForWindow(LGWindow window); }</pre>
@@ -69,24 +80,34 @@ final class LGWindowMover {
         LGState mostRecentState = window.getMostRecentState();
         Rectangle newWindowBounds;
 
-        if (mostRecentState == LGState.VERTICAL_THIRD_RIGHT) {
+        if (mostRecentState == LGState.VERTICAL_THIRD_RIGHT ||
+            mostRecentState == LGState.VERTICAL_THIRD_LEFT ||
+            mostRecentState == LGState.VERTICAL_TWO_THIRDS_LEFT) 
+        {
             window.setNewState(LGState.VERTICAL_THIRD_MIDDLE);
             newWindowBounds = new Rectangle (
                 (effectiveDisplayBounds.width / 3) + effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
-                (effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7
-            );
-        } else if (mostRecentState == LGState.VERTICAL_HALF_RIGHT) {
+                (effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
+        } 
+        else if (mostRecentState == LGState.VERTICAL_THIRD_MIDDLE) {
+            window.setNewState(LGState.VERTICAL_TWO_THIRDS_RIGHT);
+            newWindowBounds = new Rectangle (
+                (effectiveDisplayBounds.width / 3) + effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
+                (2 * effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
+        }
+        else if (mostRecentState == LGState.VERTICAL_HALF_RIGHT) 
+        {
             window.setNewState(LGState.VERTICAL_THIRD_RIGHT);
             newWindowBounds = new Rectangle (
                 (2 * effectiveDisplayBounds.width / 3) + effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
-                (effectiveDisplayBounds.width / 3) + 15, effectiveDisplayBounds.height + 7
-            );
-        } else {
+                (effectiveDisplayBounds.width / 3) + 15, effectiveDisplayBounds.height + 7);
+        } 
+        else 
+        {
             window.setNewState(LGState.VERTICAL_HALF_RIGHT);
             newWindowBounds = new Rectangle (
                 (effectiveDisplayBounds.width / 2) + effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
-                (effectiveDisplayBounds.width / 2) + 14, effectiveDisplayBounds.height + 7
-            );
+                (effectiveDisplayBounds.width / 2) + 14, effectiveDisplayBounds.height + 7);
         }
 
         window.moveWindow(newWindowBounds);
@@ -98,7 +119,7 @@ final class LGWindowMover {
      * depends on its {@code LGWindow} object's state history.
      * @param window LGWindow object of the window in question
      * @param effectiveDisplayBounds The effective bounds (as a {@code java.awt.Rectangle} of the display device
-     * the window should be moved to. This is typically the primary display.
+     * on which the window should be positioned. This is typically the primary display.
      * <br /><br />
      * The primary display can be found by using 
      * <pre>{@codeDisplayScreen DisplayManager.findPrimaryDisplayForWindow(LGWindow window); }</pre>
@@ -139,7 +160,7 @@ final class LGWindowMover {
      * depends on its {@code LGWindow} object's state history.
      * @param window LGWindow object of the window in question
      * @param effectiveDisplayBounds The effective bounds (as a {@code java.awt.Rectangle} of the display device
-     * the window should be moved to. This is typically the primary display.
+     * on which the window should be positioned. This is typically the primary display.
      * <br /><br />
      * The primary display can be found by using 
      * <pre>{@codeDisplayScreen DisplayManager.findPrimaryDisplayForWindow(LGWindow window); }</pre>
@@ -179,7 +200,7 @@ final class LGWindowMover {
      * Moves a window to the center of a display.
      * @param window LGWindow object of the window in question
      * @param effectiveDisplayBounds The effective bounds (as a {@code java.awt.Rectangle} of the display device
-     * the window should be moved to. This is typically the primary display.
+     * on which the window should be positioned. This is typically the primary display.
      * <br /><br />
      * The primary display can be found by using 
      * <pre>{@codeDisplayScreen DisplayManager.findPrimaryDisplayForWindow(LGWindow window); }</pre>
