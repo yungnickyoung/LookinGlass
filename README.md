@@ -23,5 +23,7 @@ Developer's TODO:
 * Fix bug where white window opens when user attempts hotkey when software is first run, before any window is clicked on.
 * Switch from AWT to more contemporary design (maybe Swing?)
 * Adjust math for current operations for different resolutions
-* Add support for quarter, sixth, and ninth window arrangements.
-* Change patterns of window arrangement (e.g. alt+shift+left should yield left half -> left third -> two thirds, etc.
+* Add support for ~~quarter~~, sixth, and ninth window arrangements.
+* ~~Change patterns of window arrangement (e.g. alt+shift+left should yield left half -> left third -> two thirds, etc.
+* Incorporate thorough unit testing
+* Continuous Integration
