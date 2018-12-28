@@ -30,19 +30,24 @@ final class LGWindowMover {
         Rectangle newWindowBounds;
 
         if (mostRecentState == LGState.VERTICAL_THIRD_LEFT || 
-            mostRecentState == LGState.VERTICAL_TWO_THIRDS_RIGHT ||
-            mostRecentState == LGState.VERTICAL_THIRD_RIGHT) 
+            mostRecentState == LGState.VERTICAL_TWO_THIRDS_RIGHT) 
         {
             window.setNewState(LGState.VERTICAL_THIRD_MIDDLE);
             newWindowBounds = new Rectangle (
                 (effectiveDisplayBounds.width / 3) + effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
                 (effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
         } 
-        else if (mostRecentState == LGState.VERTICAL_THIRD_MIDDLE)
-        {
+        else if (mostRecentState == LGState.VERTICAL_THIRD_MIDDLE) {
             window.setNewState(LGState.VERTICAL_TWO_THIRDS_LEFT);
             newWindowBounds = new Rectangle (
                 effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
+                (2 * effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
+        }
+        else if(mostRecentState == LGState.VERTICAL_THIRD_RIGHT) 
+        {
+            window.setNewState(LGState.VERTICAL_TWO_THIRDS_RIGHT);
+            newWindowBounds = new Rectangle (
+                (effectiveDisplayBounds.width / 3) + effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
                 (2 * effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
         }
         else if (mostRecentState == LGState.VERTICAL_HALF_LEFT) 
@@ -81,7 +86,6 @@ final class LGWindowMover {
         Rectangle newWindowBounds;
 
         if (mostRecentState == LGState.VERTICAL_THIRD_RIGHT ||
-            mostRecentState == LGState.VERTICAL_THIRD_LEFT ||
             mostRecentState == LGState.VERTICAL_TWO_THIRDS_LEFT) 
         {
             window.setNewState(LGState.VERTICAL_THIRD_MIDDLE);
@@ -93,6 +97,13 @@ final class LGWindowMover {
             window.setNewState(LGState.VERTICAL_TWO_THIRDS_RIGHT);
             newWindowBounds = new Rectangle (
                 (effectiveDisplayBounds.width / 3) + effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
+                (2 * effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
+        }
+        else if (mostRecentState == LGState.VERTICAL_THIRD_LEFT)
+        {
+            window.setNewState(LGState.VERTICAL_TWO_THIRDS_LEFT);
+            newWindowBounds = new Rectangle (
+                effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
                 (2 * effectiveDisplayBounds.width / 3) + 14, effectiveDisplayBounds.height + 7);
         }
         else if (mostRecentState == LGState.VERTICAL_HALF_RIGHT) 
@@ -131,24 +142,41 @@ final class LGWindowMover {
         Rectangle newWindowBounds;
 
         int height = effectiveDisplayBounds.height + 21;
-        if (mostRecentState == LGState.HORIZONTAL_THIRD_TOP) {
+        if (mostRecentState == LGState.HORIZONTAL_THIRD_TOP ||
+            mostRecentState == LGState.HORIZONAL_TWO_THIRDS_BOTTOM)
+        {
             window.setNewState(LGState.HORIZONTAL_THIRD_MIDDLE);
             newWindowBounds = new Rectangle (
                 effectiveDisplayBounds.x - 7, (height / 3) + effectiveDisplayBounds.y, 
-                effectiveDisplayBounds.width + 14, height / 3 + 8
-            );
-        } else if (mostRecentState == LGState.HORIZONTAL_HALF_TOP) {
+                effectiveDisplayBounds.width + 14, height / 3 + 8);
+        } 
+        else if (mostRecentState == LGState.HORIZONTAL_THIRD_MIDDLE)
+        {
+            window.setNewState(LGState.HORIZONTAL_TWO_THIRDS_TOP);
+            newWindowBounds = new Rectangle (
+                effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
+                effectiveDisplayBounds.width + 14, 2 * height / 3 + 8);
+        }
+        else if (mostRecentState == LGState.HORIZONTAL_THIRD_BOTTOM)
+        {
+            window.setNewState(LGState.HORIZONAL_TWO_THIRDS_BOTTOM);
+            newWindowBounds = new Rectangle (
+                effectiveDisplayBounds.x - 7, (height / 3) + effectiveDisplayBounds.y, 
+                effectiveDisplayBounds.width + 14, 2 * height / 3 + 8);
+        }
+        else if (mostRecentState == LGState.HORIZONTAL_HALF_TOP) 
+        {
             window.setNewState(LGState.HORIZONTAL_THIRD_TOP);
             newWindowBounds = new Rectangle (
                 effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
-                effectiveDisplayBounds.width + 14, height / 3 + 8
-            );
-        } else {
+                effectiveDisplayBounds.width + 14, height / 3 + 8);
+        } 
+        else 
+        {
             window.setNewState(LGState.HORIZONTAL_HALF_TOP);
             newWindowBounds = new Rectangle (
                 effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
-                effectiveDisplayBounds.width + 14, height / 2 + 8
-            );
+                effectiveDisplayBounds.width + 14, height / 2 + 8);
         }
 
         window.moveWindow(newWindowBounds);
@@ -172,24 +200,42 @@ final class LGWindowMover {
         Rectangle newWindowBounds;
 
         int height = effectiveDisplayBounds.height + 21;
-        if (mostRecentState == LGState.HORIZONTAL_THIRD_BOTTOM) {
+        if (mostRecentState == LGState.HORIZONTAL_THIRD_BOTTOM ||
+            mostRecentState == LGState.HORIZONTAL_THIRD_TOP ||
+            mostRecentState == LGState.HORIZONTAL_TWO_THIRDS_TOP) 
+        {
             window.setNewState(LGState.HORIZONTAL_THIRD_MIDDLE);
             newWindowBounds = new Rectangle (
                 effectiveDisplayBounds.x - 7, (height / 3) + effectiveDisplayBounds.y, 
-                effectiveDisplayBounds.width + 14, height / 3 + 8
-            );
-        } else if (mostRecentState == LGState.HORIZONTAL_HALF_BOTTOM) {
+                effectiveDisplayBounds.width + 14, height / 3 + 8);
+        } 
+        else if (mostRecentState == LGState.HORIZONTAL_THIRD_MIDDLE)
+        {
+            window.setNewState(LGState.HORIZONAL_TWO_THIRDS_BOTTOM);
+            newWindowBounds = new Rectangle (
+                effectiveDisplayBounds.x - 7, (height / 3) + effectiveDisplayBounds.y, 
+                effectiveDisplayBounds.width + 14, 2 * height / 3 + 8);
+        }
+        else if (mostRecentState == LGState.HORIZONTAL_THIRD_TOP)
+        {
+            window.setNewState(LGState.HORIZONTAL_TWO_THIRDS_TOP);
+            newWindowBounds = new Rectangle (
+                effectiveDisplayBounds.x - 7, effectiveDisplayBounds.y, 
+                effectiveDisplayBounds.width + 14, 2 * height / 3 + 8);
+        }
+        else if (mostRecentState == LGState.HORIZONTAL_HALF_BOTTOM) 
+        {
             window.setNewState(LGState.HORIZONTAL_THIRD_BOTTOM);
             newWindowBounds = new Rectangle (
                 effectiveDisplayBounds.x - 7, (2 * height / 3) + effectiveDisplayBounds.y, 
-                effectiveDisplayBounds.width + 14, height / 3
-            );
-        } else {
+                effectiveDisplayBounds.width + 14, height / 3);
+        } 
+        else 
+        {
             window.setNewState(LGState.HORIZONTAL_HALF_BOTTOM);
             newWindowBounds = new Rectangle (
                 effectiveDisplayBounds.x - 7, (height / 2) + effectiveDisplayBounds.y, 
-                effectiveDisplayBounds.width + 14, height / 2
-            );
+                effectiveDisplayBounds.width + 14, height / 2);
         }
 
         window.moveWindow(newWindowBounds);
