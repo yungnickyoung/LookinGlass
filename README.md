@@ -4,7 +4,7 @@ Looking Glass provides the user several hotkeys that allow for easy window resiz
 
 Looking Glass is still an early work in progress.
 
-The following features are planned for Looking Glass:
+## Planned Features
 * Flexible window resizing
 * Customizable hotkey support
 * Multi-Monitor support
@@ -13,17 +13,20 @@ The following features are planned for Looking Glass:
   * e.g. being able to manage Window A while Window B is in focus
 * Save window layouts and re-use them later (with option to open any programs not already open in saved layout)
 
-Developer's TODO:
-* Disable keyboard from typing while command for resizing is being used
+## Known bugs
+* When the windows are arranged in any arrangement where the left window has width 2/3 of display and right window has width 1/3 of display, if the display's width % 3 == 2, there is a one-pixel gap between the windows.
+* When user attempts hotkey when software is first run (and there is no active window), a white Java window opens.
+* There seems to be some weird bugs when handling windows with transparency setting. For example, the window goes to the right and then locks to the left when trying to use hotkeys to move it to the right.
+  * e.g. cmder
+
+## Developer's TODO
 * ~~Consider disabling (Windows Key + Arrow Key) window movement built into Windows, and using Windows key as functional key instead~~
-* Handle all resolutions properly, including odd ones like 1368x768 (~16.008:9), 16:10, etc
-* Explore error when handling windows with transparency (window goes right then locks to left when pressing Shift Alt Right)
-  * e.g. cmder (?)
 * ~~Fix comment errors in SystemTrayItem~~
-* Fix bug where white window opens when user attempts hotkey when software is first run, before any window is clicked on.
+* ~~Change patterns of window arrangement (e.g. alt+shift+left should yield left half -> left third -> two thirds, etc.~~
+* Add support for ~~quarter~~, sixth, and ninth window arrangements.
+* Disable keyboard from typing while command for resizing is being used
+* Handle all resolutions properly, including odd ones like 1368x768 (~16.008:9), 16:10, etc
 * Switch from AWT to more contemporary design (maybe Swing?)
 * Adjust math for current operations for different resolutions
-* Add support for ~~quarter~~, sixth, and ninth window arrangements.
-* ~~Change patterns of window arrangement (e.g. alt+shift+left should yield left half -> left third -> two thirds, etc.
 * Incorporate thorough unit testing
 * Continuous Integration
