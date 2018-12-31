@@ -26,8 +26,8 @@ public class DisplayScreen {
         System.out.print(", Insets: " + insets.toString());
 
         effectiveBounds = new Rectangle(
-                gcBounds.x,
-                gcBounds.y,
+                gcBounds.x + insets.left,
+                gcBounds.y + insets.top,
                 gcBounds.width - (insets.left + insets.right),
                 gcBounds.height - (insets.top + insets.bottom)
         );
