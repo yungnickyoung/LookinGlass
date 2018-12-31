@@ -18,6 +18,8 @@ Looking Glass is still an early work in progress.
 * When user attempts hotkey when software is first run (and there is no active window), a white Java window opens.
 * There seems to be some weird bugs when handling windows with transparency setting. For example, the window goes to the right and then locks to the left when trying to use hotkeys to move it to the right.
   * e.g. cmder
+* If task bar is anchored to the left of the display, it is correctly reflected in Insets and thus the resulting window size, but the window is not given the proper x-coordinate offset.
+* Window heights are not correct for eliminating pixel margins in any ratio display.
 
 ## Developer's TODO
 * ~~Consider disabling (Windows Key + Arrow Key) window movement built into Windows, and using Windows key as functional key instead~~
