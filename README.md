@@ -1,8 +1,9 @@
-# Looking Glass
-Looking Glass is software designed to make it easy to manage your windows on the Windows OS.
-Looking Glass provides the user several hotkeys that allow for easy window resizing. It is inspired by and similar to the [Spectacle](https://github.com/eczarny/spectacle) app for Mac OS X.
+![alt text](https://raw.githubusercontent.com/yungnickyoung/Looking-Glass/master/src/main/resources/com/github/yungnickyoung/LookingGlass/logo.png "LookinGlass")
 
-Looking Glass is still an early work in progress.
+LookinGlass is software designed to make it easy to manage your windows on the Windows OS.
+LookinGlass provides the user several hotkeys that allow for easy window resizing. It is inspired by and similar to the [Spectacle](https://github.com/eczarny/spectacle) app for Mac OS X.
+
+LookinGlass is still an early work in progress.
 
 ## Planned Features
 * Flexible window resizing
